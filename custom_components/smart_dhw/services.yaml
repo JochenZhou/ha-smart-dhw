@@ -1,0 +1,128 @@
+calibrate_bath:
+  name: 校准洗澡水温分档表
+  description: >
+    按当前室外/室内条件，把用户期望的洗澡水温反推成**当前分档**的偏移并保存。
+    其它档位与日常分档表都不受影响；超出上下限时按窗口限制并在日志中提示。
+  fields:
+    temperature:
+      name: 期望洗澡水温
+      description: 摄氏度（会限制在洗澡上下限内）
+      required: true
+      example: 42
+      selector:
+        number:
+          min: 30
+          max: 50
+          step: 1
+          unit_of_measurement: "°C"
+    entry_id:
+      name: 配置项 ID
+      description: 多实例时指定；省略则全部实例
+      required: false
+      selector:
+        text:
+
+calibrate_daily:
+  name: 校准日常水温分档表
+  description: 同洗澡校准，只作用于日常表；结果始终不高于洗澡表
+  fields:
+    temperature:
+      name: 期望日常水温
+      description: 摄氏度
+      required: true
+      example: 35
+      selector:
+        number:
+          min: 30
+          max: 50
+          step: 1
+          unit_of_measurement: "°C"
+    entry_id:
+      name: 配置项 ID
+      required: false
+      selector:
+        text:
+
+set_offset:
+  name: 设置分档偏移
+  description: 直接写入偏移（band=all 时对全部档位整体平移），便于自动化批量调档
+  fields:
+    kind:
+      name: 表
+      description: bath=洗澡，daily=日常
+      required: true
+      selector:
+        select:
+          options:
+            - bath
+            - daily
+    offset:
+      name: 偏移
+      description: 摄氏度整数，可为负
+      required: true
+      example: 2
+      selector:
+        number:
+          min: -10
+          max: 15
+          step: 1
+          unit_of_measurement: "°C"
+    band:
+      name: 档位
+      description: 留空或 all 表示全部档位
+      required: false
+      selector:
+        select:
+          options:
+            - all
+            - hot
+            - warm
+            - mild
+            - cool
+            - cold
+    entry_id:
+      name: 配置项 ID
+      required: false
+      selector:
+        text:
+
+set_band:
+  name: 手动锁定分档
+  description: 忽略室外温度与迟滞，直接切到指定分档（便于手动/自动化干预）
+  fields:
+    band:
+      name: 档位
+      required: true
+      selector:
+        select:
+          options:
+            - hot
+            - warm
+            - mild
+            - cool
+            - cold
+    entry_id:
+      name: 配置项 ID
+      required: false
+      selector:
+        text:
+
+reset_table:
+  name: 恢复出厂分档表
+  description: 清除全部家庭校准偏移，回到默认分档
+  fields:
+    entry_id:
+      name: 配置项 ID
+      required: false
+      selector:
+        text:
+
+recalculate:
+  name: 立即重算
+  description: 按当前分档表与传感器温度重新计算目标水温
+  fields:
+    entry_id:
+      name: 配置项 ID
+      required: false
+      selector:
+        text:

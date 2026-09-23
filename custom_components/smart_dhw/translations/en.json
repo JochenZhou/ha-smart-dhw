@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart DHW",
+        "description": "Outdoor-band DHW setpoints. Writing a setpoint calibrates only the band that is active right now; limits are entities.",
+        "data": {
+          "name": "Name",
+          "outdoor_sensor": "Outdoor temperature (Celsius)",
+          "outdoor_sensor_backup": "Backup outdoor temperature",
+          "indoor_sensor": "Indoor temperature (must be a temperature entity)",
+          "indoor_sensor_backup": "Backup indoor temperature",
+          "device_target_entity": "Water heater target number entity",
+          "enable_indoor_trim": "Enable indoor trim (±1 °C)",
+          "sync_device": "Sync device target automatically",
+          "hysteresis": "Band hysteresis",
+          "band_hold_minutes": "Band hold time"
+        }
+      }
+    },
+    "error": {
+      "not_a_temperature": "That entity is not a Celsius temperature reading (e.g. a humidity sensor)"
+    },
+    "abort": {
+      "already_configured": "This sensor combination is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart DHW · options",
+        "description": "Set the limits on the limit entities, not here.",
+        "data": {
+          "outdoor_sensor": "Outdoor temperature",
+          "outdoor_sensor_backup": "Backup outdoor temperature",
+          "indoor_sensor": "Indoor temperature",
+          "indoor_sensor_backup": "Backup indoor temperature",
+          "device_target_entity": "Water heater target entity",
+          "enable_indoor_trim": "Indoor trim",
+          "sync_device": "Sync device target",
+          "hysteresis": "Band hysteresis",
+          "band_hold_minutes": "Band hold time"
+        }
+      }
+    },
+    "error": {
+      "not_a_temperature": "That entity is not a Celsius temperature reading"
+    }
+  },
+  "services": {
+    "calibrate_bath": {
+      "name": "Calibrate bath band table",
+      "description": "Reverse-calculate the offset for the active band only",
+      "fields": {
+        "temperature": {
+          "name": "Desired bath temperature"
+        },
+        "entry_id": {
+          "name": "Config entry id"
+        }
+      }
+    },
+    "calibrate_daily": {
+      "name": "Calibrate daily band table",
+      "description": "Reverse-calculate the offset for the active band only",
+      "fields": {
+        "temperature": {
+          "name": "Desired daily temperature"
+        },
+        "entry_id": {
+          "name": "Config entry id"
+        }
+      }
+    },
+    "set_offset": {
+      "name": "Set band offset",
+      "description": "Write an offset directly (band=all shifts every band)",
+      "fields": {
+        "kind": {
+          "name": "Table"
+        },
+        "offset": {
+          "name": "Offset"
+        },
+        "band": {
+          "name": "Band"
+        },
+        "entry_id": {
+          "name": "Config entry id"
+        }
+      }
+    },
+    "set_band": {
+      "name": "Force band",
+      "description": "Ignore outdoor temperature and hysteresis",
+      "fields": {
+        "band": {
+          "name": "Band"
+        },
+        "entry_id": {
+          "name": "Config entry id"
+        }
+      }
+    },
+    "reset_table": {
+      "name": "Reset band tables",
+      "description": "Clear all calibration offsets"
+    },
+    "recalculate": {
+      "name": "Recalculate now",
+      "description": "Recompute the target setpoints"
+    }
+  },
+  "entity": {
+    "number": {
+      "bath_setpoint": {
+        "name": "Bath setpoint"
+      },
+      "daily_setpoint": {
+        "name": "Daily setpoint"
+      },
+      "bath_min": {
+        "name": "Bath minimum"
+      },
+      "bath_max": {
+        "name": "Bath maximum"
+      },
+      "daily_min": {
+        "name": "Daily minimum"
+      },
+      "daily_max": {
+        "name": "Daily maximum"
+      }
+    },
+    "sensor": {
+      "band": {
+        "name": "Active band"
+      },
+      "offset": {
+        "name": "Bath calibration offset"
+      },
+      "daily_offset": {
+        "name": "Daily calibration offset"
+      },
+      "mode": {
+        "name": "Device push state"
+      }
+    },
+    "binary_sensor": {
+      "input_ok": {
+        "name": "Input valid"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Dynamic setpoints"
+      },
+      "sync": {
+        "name": "Sync device target"
+      }
+    }
+  }
+}

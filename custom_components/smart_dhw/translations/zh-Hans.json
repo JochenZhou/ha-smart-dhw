@@ -1,0 +1,169 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "智能热水",
+        "description": "按室外温度分档设定洗澡/日常水温。调节「洗澡水温/日常水温」只校准**当前分档**，其余档位保持原样；上下限请在实体中调节。",
+        "data": {
+          "name": "名称",
+          "outdoor_sensor": "室外温度传感器（摄氏）",
+          "outdoor_sensor_backup": "备用室外温度（可选）",
+          "indoor_sensor": "室内温度（可选，必须为温度实体）",
+          "indoor_sensor_backup": "备用室内温度（可选）",
+          "device_target_entity": "热水器设备目标温度（可选，用于同步下发）",
+          "enable_indoor_trim": "启用室内温度微调（±1°C）",
+          "sync_device": "自动同步设备目标",
+          "hysteresis": "分档迟滞",
+          "band_hold_minutes": "换档需持续"
+        }
+      }
+    },
+    "error": {
+      "not_a_temperature": "该实体不是摄氏温度读数（例如湿度传感器），请重新选择"
+    },
+    "abort": {
+      "already_configured": "该传感器组合已配置"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "智能热水 · 选项",
+        "description": "上下限请在实体「洗澡下限/上限」「日常下限/上限」中调节，无需在此填写。",
+        "data": {
+          "outdoor_sensor": "室外温度传感器",
+          "outdoor_sensor_backup": "备用室外温度",
+          "indoor_sensor": "室内温度",
+          "indoor_sensor_backup": "备用室内温度",
+          "device_target_entity": "热水器设备目标温度",
+          "enable_indoor_trim": "室内温度微调",
+          "sync_device": "同步设备目标",
+          "hysteresis": "分档迟滞",
+          "band_hold_minutes": "换档需持续"
+        }
+      }
+    },
+    "error": {
+      "not_a_temperature": "该实体不是摄氏温度读数（例如湿度传感器），请重新选择"
+    }
+  },
+  "services": {
+    "calibrate_bath": {
+      "name": "校准洗澡水温分档表",
+      "description": "用当前期望洗澡水温反推当前分档的偏移并保存（不影响其它档位与日常表）",
+      "fields": {
+        "temperature": {
+          "name": "期望洗澡水温",
+          "description": "摄氏度"
+        },
+        "entry_id": {
+          "name": "配置项 ID"
+        }
+      }
+    },
+    "calibrate_daily": {
+      "name": "校准日常水温分档表",
+      "description": "用当前期望日常水温反推当前分档的偏移并保存",
+      "fields": {
+        "temperature": {
+          "name": "期望日常水温",
+          "description": "摄氏度"
+        },
+        "entry_id": {
+          "name": "配置项 ID"
+        }
+      }
+    },
+    "set_offset": {
+      "name": "设置分档偏移",
+      "description": "直接写入偏移（可用 band=all 做整体平移），便于自动化批量调档",
+      "fields": {
+        "kind": {
+          "name": "表",
+          "description": "bath 洗澡 / daily 日常"
+        },
+        "offset": {
+          "name": "偏移",
+          "description": "摄氏度整数，可为负"
+        },
+        "band": {
+          "name": "档位",
+          "description": "hot/warm/mild/cool/cold 或 all"
+        },
+        "entry_id": {
+          "name": "配置项 ID"
+        }
+      }
+    },
+    "set_band": {
+      "name": "手动锁定分档",
+      "description": "忽略室外温度与迟滞，直接切到指定分档",
+      "fields": {
+        "band": {
+          "name": "档位",
+          "description": "hot/warm/mild/cool/cold"
+        },
+        "entry_id": {
+          "name": "配置项 ID"
+        }
+      }
+    },
+    "reset_table": {
+      "name": "恢复出厂分档表",
+      "description": "清除全部家庭校准偏移"
+    },
+    "recalculate": {
+      "name": "立即重算",
+      "description": "按当前分档表与传感器重算目标水温"
+    }
+  },
+  "entity": {
+    "number": {
+      "bath_setpoint": {
+        "name": "洗澡水温"
+      },
+      "daily_setpoint": {
+        "name": "日常水温"
+      },
+      "bath_min": {
+        "name": "洗澡下限"
+      },
+      "bath_max": {
+        "name": "洗澡上限"
+      },
+      "daily_min": {
+        "name": "日常下限"
+      },
+      "daily_max": {
+        "name": "日常上限"
+      }
+    },
+    "sensor": {
+      "band": {
+        "name": "当前分档"
+      },
+      "offset": {
+        "name": "洗澡校准偏移"
+      },
+      "daily_offset": {
+        "name": "日常校准偏移"
+      },
+      "mode": {
+        "name": "设备下发状态"
+      }
+    },
+    "binary_sensor": {
+      "input_ok": {
+        "name": "输入有效"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "动态水温"
+      },
+      "sync": {
+        "name": "同步设备目标"
+      }
+    }
+  }
+}

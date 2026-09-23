@@ -1,0 +1,12 @@
+{
+  "domain": "smart_dhw",
+  "name": "智能热水",
+  "codeowners": [
+    "@JochenZhou"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/JochenZhou/ha-smart-dhw",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/JochenZhou/ha-smart-dhw/issues",
+  "version": "1.2.0"
+}
