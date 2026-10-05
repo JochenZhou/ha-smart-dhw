@@ -4,6 +4,7 @@
 [![打开 Home Assistant 添加集成](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=smart_dhw)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Validate](https://github.com/JochenZhou/ha-smart-dhw/actions/workflows/validate.yml/badge.svg)](https://github.com/JochenZhou/ha-smart-dhw/actions/workflows/validate.yml)
 
 按**室外温度分档**自动设定燃气热水器的洗澡水温 / 日常水温，并可选同步下发到热水器实体。
 分档表出厂内置，家里的实际管损由你**按档校准**，不会被一次校准压成一条直线。
